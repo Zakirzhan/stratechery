@@ -7,19 +7,89 @@
 //
 
 import UIKit
+import Cartography
+import Alamofire
+import ObjectMapper
+//import AlamofireObjectMapper
+
 
 class ViewController: UIViewController {
-
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "stratecheryPost")
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+         configureViews()
+        configureConstraints()
+        self.title = "SEX"
+        
+        Feed.fetchFeed() { [unowned self] (feeds, error) in
+            guard let feedList = feeds else {
+                print("Error")
+                return
+            }
+//            self.feedList = feedList
+//            print(feedList)
+//            self.tableView.reloadData()
+        }
+
+        
+        
+        
+    }
+    func configureViews() {
+        tableView.backgroundColor = .red
+        view.addSubview(tableView)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func configureConstraints() {
+         constrain(tableView, view) { tv, v  in
+            tv.edges == v.edges
+        }
     }
-
-
+    
+//    }
+//    // With Alamofire
+//    func getFetch() {
+//        Alamofire.request("http://uka.kz/?type=feed&page=1").responseObject({ (response: Mapper<Post>) -> Void in
+//            if response.result.isSuccess {
+//                print(response.result.value!)
+//            }
+//        })
+//    }
+    
 }
+//struct Post: Mappable {
+//    var title = ""
+//    var url = ""
+//    var imgUrl = ""
+//    var date  = ""
+//    
+//    init?(map: Map) {}
+//    mutating func mapping(map: Map) {
+//        title <- map["title"]
+//        url <- map["url"]
+//        imgUrl <- map["image"]
+//        date <- map["date"]
+//    }
+//}
 
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "stratecheryPost", for: indexPath) as! PostTableViewCell
+        cell.label.text = "MAKA"
+        return cell
+    }
+    
+    
+}

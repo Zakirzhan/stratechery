@@ -4,8 +4,11 @@
 target 'stratechery' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod 'EasyPeasy'
   pod 'Alamofire'
+  pod ‘Cartography’
+  pod 'ObjectMapper’
+  pod ‘AlamofireObjectMapper’
+
   # Pods for stratechery
 
   target 'stratecheryTests' do

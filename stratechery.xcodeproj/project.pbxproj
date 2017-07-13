@@ -10,13 +10,14 @@
 		24FF20E4470D9AE489C81A1E /* Pods_stratechery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0390D18FD730579B13EA /* Pods_stratechery.framework */; };
 		D0E19E9FF8B917E24BF502D4 /* Pods_stratecheryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */; };
 		F8CDBA51D4A4E49347E8C7C7 /* Pods_stratecheryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9314665A2F5590D8750982D3 /* Pods_stratecheryTests.framework */; };
+		FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13884A1F179887003E5511 /* JSONFetch.swift */; };
 		FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBF91F176BC70004900D /* AppDelegate.swift */; };
 		FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBFB1F176BC70004900D /* ViewController.swift */; };
-		FAAAFBFF1F176BC70004900D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAAFBFD1F176BC70004900D /* Main.storyboard */; };
 		FAAAFC011F176BC70004900D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAAAFC001F176BC70004900D /* Assets.xcassets */; };
 		FAAAFC041F176BC70004900D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAAFC021F176BC70004900D /* LaunchScreen.storyboard */; };
 		FAAAFC0F1F176BC70004900D /* stratecheryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC0E1F176BC70004900D /* stratecheryTests.swift */; };
 		FAAAFC1A1F176BC70004900D /* stratecheryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC191F176BC70004900D /* stratecheryUITests.swift */; };
+		FAAAFC2B1F176F670004900D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,10 +47,10 @@
 		9314665A2F5590D8750982D3 /* Pods_stratecheryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratecheryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratecheryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F30C0390D18FD730579B13EA /* Pods_stratechery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratechery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA13884A1F179887003E5511 /* JSONFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
 		FAAAFBF61F176BC70004900D /* stratechery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stratechery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAAFBF91F176BC70004900D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAAAFBFB1F176BC70004900D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FAAAFBFE1F176BC70004900D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FAAAFC001F176BC70004900D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAAAFC031F176BC70004900D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAAAFC051F176BC70004900D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		FAAAFC151F176BC70004900D /* stratecheryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stratecheryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAAFC191F176BC70004900D /* stratecheryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stratecheryUITests.swift; sourceTree = "<group>"; };
 		FAAAFC1B1F176BC70004900D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,8 +140,9 @@
 			isa = PBXGroup;
 			children = (
 				FAAAFBF91F176BC70004900D /* AppDelegate.swift */,
-				FAAAFBFB1F176BC70004900D /* ViewController.swift */,
-				FAAAFBFD1F176BC70004900D /* Main.storyboard */,
+				FAAAFC281F176EAE0004900D /* Models */,
+				FAAAFC271F176EA70004900D /* Views */,
+				FAAAFC291F176EB40004900D /* Controllers */,
 				FAAAFC001F176BC70004900D /* Assets.xcassets */,
 				FAAAFC021F176BC70004900D /* LaunchScreen.storyboard */,
 				FAAAFC051F176BC70004900D /* Info.plist */,
@@ -163,6 +166,30 @@
 				FAAAFC1B1F176BC70004900D /* Info.plist */,
 			);
 			path = stratecheryUITests;
+			sourceTree = "<group>";
+		};
+		FAAAFC271F176EA70004900D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FAAAFC281F176EAE0004900D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA13884A1F179887003E5511 /* JSONFetch.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FAAAFC291F176EB40004900D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FAAAFBFB1F176BC70004900D /* ViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,7 +310,6 @@
 			files = (
 				FAAAFC041F176BC70004900D /* LaunchScreen.storyboard in Resources */,
 				FAAAFC011F176BC70004900D /* Assets.xcassets in Resources */,
-				FAAAFBFF1F176BC70004900D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +474,8 @@
 			files = (
 				FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */,
 				FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */,
+				FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */,
+				FAAAFC2B1F176F670004900D /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,14 +511,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FAAAFBFD1F176BC70004900D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAAAFBFE1F176BC70004900D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FAAAFC021F176BC70004900D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -698,6 +718,7 @@
 				FAAAFC201F176BC70004900D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAAAFC211F176BC70004900D /* Build configuration list for PBXNativeTarget "stratecheryTests" */ = {
 			isa = XCConfigurationList;
@@ -706,6 +727,7 @@
 				FAAAFC231F176BC70004900D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FAAAFC241F176BC70004900D /* Build configuration list for PBXNativeTarget "stratecheryUITests" */ = {
 			isa = XCConfigurationList;
@@ -714,6 +736,7 @@
 				FAAAFC261F176BC70004900D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

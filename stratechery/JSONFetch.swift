@@ -1,0 +1,47 @@
+//
+//  JSONFetch.swift
+//  stratechery
+//
+//  Created by macbook on 13.07.17.
+//  Copyright © 2017 zaka. All rights reserved.
+//
+
+import Foundation
+import Alamofire
+import ObjectMapper
+
+
+
+struct Feed {
+    var title: String?
+    var link: String?
+    var imageLink: String?
+    var date: String?
+    //    var releaseDate: String
+    
+    init?(map: Map) {
+        
+    }
+    
+    static func fetchFeed(callback: @escaping ([Feed]?, Error?) -> Void ){
+        let url = "http://uka.kz/?type=feed&page=1"
+        Alamofire.request(url).responseJSON { response in
+            
+            if let json = response.result.value {
+                print("JSON: \(json)") // serialized json response
+            }//          let feeds = Mapper<Feed>().mapArray(JSONObject: json)
+        }
+        
+    }
+    
+}
+
+
+extension Feed: Mappable {
+    mutating func mapping(map: Map) {
+        title <- map["title"]
+        link <- map["url"]
+        imageLink <- map["image"]
+        date <- map["date"]
+    }
+}
