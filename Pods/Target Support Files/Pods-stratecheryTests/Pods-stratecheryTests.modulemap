@@ -1,6 +1,0 @@
-framework module Pods_stratecheryTests {
-  umbrella header "Pods-stratecheryTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
