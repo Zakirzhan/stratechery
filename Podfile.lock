@@ -1,0 +1,15 @@
+PODS:
+  - Alamofire (4.5.0)
+  - EasyPeasy (1.4.2)
+
+DEPENDENCIES:
+  - Alamofire
+  - EasyPeasy
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  EasyPeasy: 50e7130b61f495ce105796e438d4136e2c8d2cc0
+
+PODFILE CHECKSUM: 9ddfbcb8843965e1af1ca173f34ea9d733579c95
+
+COCOAPODS: 1.2.1

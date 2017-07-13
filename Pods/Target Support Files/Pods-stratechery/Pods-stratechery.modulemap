@@ -1,0 +1,6 @@
+framework module Pods_stratechery {
+  umbrella header "Pods-stratechery-umbrella.h"
+
+  export *
+  module * { export * }
+}
