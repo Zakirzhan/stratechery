@@ -22,6 +22,9 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+    
+    var posts = [Feed]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
          configureViews()
@@ -29,10 +32,9 @@ class ViewController: UIViewController {
         self.title = "SEX"
         
         Feed.fetchFeed() { [unowned self] (feeds, error) in
-            guard let feedList = feeds else {
-                print("Error")
-                return
-            }
+            guard let feedList = feeds else { return }
+            self.posts = feedList
+            self.tableView.reloadData()
 //            self.feedList = feedList
 //            print(feedList)
 //            self.tableView.reloadData()
@@ -82,12 +84,12 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stratecheryPost", for: indexPath) as! PostTableViewCell
-        cell.label.text = "MAKA"
+        cell.label.text = posts[indexPath.row].title
         return cell
     }
     

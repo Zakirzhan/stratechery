@@ -24,11 +24,13 @@ struct Feed {
     }
     
     static func fetchFeed(callback: @escaping ([Feed]?, Error?) -> Void ){
-        let url = "http://uka.kz/?type=feed&page=1"
+        let url = "http://uka.kz/?type=feed&page=4"
         Alamofire.request(url).responseJSON { response in
-            
+//            print(response)
             if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
+                let feeds = Mapper<Feed>().mapArray(JSONObject: json)
+                callback(feeds, nil)
+                // serialized json response
             }//          let feeds = Mapper<Feed>().mapArray(JSONObject: json)
         }
         
