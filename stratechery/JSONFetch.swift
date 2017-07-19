@@ -7,41 +7,32 @@
 //
 
 import Foundation
-import Alamofire
 import ObjectMapper
 
 
-
-struct Feed {
+class Project: NSObject, Mappable {
+    
+    var projectId: Int?
+    var accountId: Int?
+    var dateCreated: Int?
+    var dateModified: Int?
     var title: String?
-    var link: String?
-    var imageLink: String?
-    var date: String?
-    //    var releaseDate: String
+    var status: String?
     
-    init?(map: Map) {
-        
+    override init() {
+        super.init()
     }
     
-    static func fetchFeed(callback: @escaping ([Feed]?, Error?) -> Void ){
-        let url = "http://uka.kz/?type=feed&page=1"
-        Alamofire.request(url).responseJSON { response in
-            
-            if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
-            }//          let feeds = Mapper<Feed>().mapArray(JSONObject: json)
-        }
-        
+    convenience required init?(map: Map) {
+        self.init()
     }
     
-}
-
-
-extension Feed: Mappable {
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
+        projectId <- map["id"]
+        accountId <- map["account_id"]
+        dateCreated <- map["date_created"]
+        dateModified <- map["date_modified"]
         title <- map["title"]
-        link <- map["url"]
-        imageLink <- map["image"]
-        date <- map["date"]
+        status <- map["status"]
     }
 }

@@ -9,12 +9,13 @@
 import UIKit
 import Cartography
 import Alamofire
-import ObjectMapper
+import AlamofireObjectMapper
 //import AlamofireObjectMapper
 
 
 class ViewController: UIViewController {
-    
+    var projects:[Project] = []
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "stratecheryPost")
@@ -27,21 +28,10 @@ class ViewController: UIViewController {
          configureViews()
         configureConstraints()
         self.title = "SEX"
+        fetchData()
         
-        Feed.fetchFeed() { [unowned self] (feeds, error) in
-            guard let feedList = feeds else {
-                print("Error")
-                return
-            }
-//            self.feedList = feedList
-//            print(feedList)
-//            self.tableView.reloadData()
         }
-
-        
-        
-        
-    }
+    
     func configureViews() {
         tableView.backgroundColor = .red
         view.addSubview(tableView)
@@ -53,17 +43,23 @@ class ViewController: UIViewController {
         }
     }
     
-//    }
-//    // With Alamofire
-//    func getFetch() {
-//        Alamofire.request("http://uka.kz/?type=feed&page=1").responseObject({ (response: Mapper<Post>) -> Void in
-//            if response.result.isSuccess {
-//                print(response.result.value!)
-//            }
-//        })
-//    }
     
-}
+    func fetchData(){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        let apiUrl = "http://uka.kz/?type=feed&page=1"
+        Alamofire.request(apiUrl).responseJSON(completionHandler: { (DataResponse<[Project]>) in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            switch response.result {
+            case .success:
+                self.projects = response.result.value ?? []
+                for project in self.projects {
+                    print(project.title ?? "")
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 //struct Post: Mappable {
 //    var title = ""
 //    var url = ""
