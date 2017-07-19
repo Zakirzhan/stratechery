@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  stratechery
@@ -5,22 +6,21 @@
 //  Created by macbook on 13.07.17.
 //  Copyright © 2017 zaka. All rights reserved.
 //
-
 import UIKit
 import Cartography
 import Alamofire
-import AlamofireObjectMapper
+import ObjectMapper
+import SDWebImage
 //import AlamofireObjectMapper
 
-
 class ViewController: UIViewController {
-    var projects:[Project] = []
-
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "stratecheryPost")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = self.view.frame.height/2
         return tableView
     }()
     
@@ -28,47 +28,51 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         configureViews()
+        configureViews()
         configureConstraints()
-        self.title = "SEX"
-        fetchData()
+        self.title = "Blog"
         
+        Feed.fetchFeed() { [unowned self] (feeds, error) in
+            guard let feedList = feeds else { return }
+            self.posts = feedList
+            self.tableView.reloadData()
+            //            self.feedList = feedList
+            //            print(feedList)
+            //            self.tableView.reloadData()
         }
-    
+        
+        
+        
+        
+    }
     func configureViews() {
         tableView.backgroundColor = .red
         view.addSubview(tableView)
     }
-
+    
     func configureConstraints() {
-         constrain(tableView, view) { tv, v  in
+        constrain(tableView, view) { tv, v  in
             tv.edges == v.edges
         }
     }
     
+    //    }
+    //    // With Alamofire
+    //    func getFetch() {
+    //        Alamofire.request("http://uka.kz/?type=feed&page=1").responseObject({ (response: Mapper<Post>) -> Void in
+    //            if response.result.isSuccess {
+    //                print(response.result.value!)
+    //            }
+    //        })
+    //    }
     
-    func fetchData(){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        let apiUrl = "http://uka.kz/?type=feed&page=1"
-        Alamofire.request(apiUrl).responseJSON(completionHandler: { (DataResponse<[Project]>) in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            switch response.result {
-            case .success:
-                self.projects = response.result.value ?? []
-                for project in self.projects {
-                    print(project.title ?? "")
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+}
 //struct Post: Mappable {
 //    var title = ""
 //    var url = ""
 //    var imgUrl = ""
 //    var date  = ""
-//    
+//
 //    init?(map: Map) {}
 //    mutating func mapping(map: Map) {
 //        title <- map["title"]
@@ -77,7 +81,6 @@ class ViewController: UIViewController {
 //        date <- map["date"]
 //    }
 //}
-
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,7 +89,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stratecheryPost", for: indexPath) as! PostTableViewCell
+        cell.imgView.sd_setImage(with: URL(string: posts[indexPath.row].imageLink!), placeholderImage: UIImage(named: "no-image"))
         cell.label.text = posts[indexPath.row].title
+        cell.dateLabel.text = posts[indexPath.row].date
         return cell
     }
     

@@ -5,34 +5,44 @@
 //  Created by macbook on 13.07.17.
 //  Copyright © 2017 zaka. All rights reserved.
 //
-
 import Foundation
+import Alamofire
 import ObjectMapper
 
 
-class Project: NSObject, Mappable {
-    
-    var projectId: Int?
-    var accountId: Int?
-    var dateCreated: Int?
-    var dateModified: Int?
+
+struct Feed {
     var title: String?
-    var status: String?
+    var link: String?
+    var imageLink: String?
+    var date: String?
+    //    var releaseDate: String
     
-    override init() {
-        super.init()
+    init?(map: Map) {
+        
     }
     
-    convenience required init?(map: Map) {
-        self.init()
+    static func fetchFeed(callback: @escaping ([Feed]?, Error?) -> Void ){
+        let url = "http://uka.kz/?type=feed&page=4"
+        Alamofire.request(url).responseJSON { response in
+            //            print(response)
+            if let json = response.result.value {
+                let feeds = Mapper<Feed>().mapArray(JSONObject: json)
+                callback(feeds, nil)
+                // serialized json response
+            }//          let feeds = Mapper<Feed>().mapArray(JSONObject: json)
+        }
+        
     }
     
-    func mapping(map: Map) {
-        projectId <- map["id"]
-        accountId <- map["account_id"]
-        dateCreated <- map["date_created"]
-        dateModified <- map["date_modified"]
+}
+
+
+extension Feed: Mappable {
+    mutating func mapping(map: Map) {
         title <- map["title"]
-        status <- map["status"]
+        link <- map["url"]
+        imageLink <- map["image"]
+        date <- map["date"]
     }
 }

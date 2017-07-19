@@ -8,7 +8,7 @@ target 'stratechery' do
   pod ‘Cartography’
   pod 'ObjectMapper’
   pod ‘AlamofireObjectMapper’
-
+  pod 'SDWebImage'
   # Pods for stratechery
 
   target 'stratecheryTests' do
