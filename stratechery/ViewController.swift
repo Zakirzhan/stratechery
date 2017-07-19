@@ -23,6 +23,9 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+    
+    var posts = [Feed]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
          configureViews()
@@ -78,12 +81,12 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "stratecheryPost", for: indexPath) as! PostTableViewCell
-        cell.label.text = "MAKA"
+        cell.label.text = posts[indexPath.row].title
         return cell
     }
     
