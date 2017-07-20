@@ -11,6 +11,7 @@
 		D0E19E9FF8B917E24BF502D4 /* Pods_stratecheryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */; };
 		F8CDBA51D4A4E49347E8C7C7 /* Pods_stratecheryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9314665A2F5590D8750982D3 /* Pods_stratecheryTests.framework */; };
 		FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13884A1F179887003E5511 /* JSONFetch.swift */; };
+		FA689D8A1F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA689D891F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift */; };
 		FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBF91F176BC70004900D /* AppDelegate.swift */; };
 		FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBFB1F176BC70004900D /* ViewController.swift */; };
 		FAAAFC011F176BC70004900D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAAAFC001F176BC70004900D /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 		FAAAFC0F1F176BC70004900D /* stratecheryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC0E1F176BC70004900D /* stratecheryTests.swift */; };
 		FAAAFC1A1F176BC70004900D /* stratecheryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC191F176BC70004900D /* stratecheryUITests.swift */; };
 		FAAAFC2B1F176F670004900D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */; };
+		FAC55F151F20C8060054A423 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC55F141F20C8060054A423 /* PostViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,7 @@
 		B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratecheryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F30C0390D18FD730579B13EA /* Pods_stratechery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratechery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA13884A1F179887003E5511 /* JSONFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
+		FA689D891F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithoutImgPostTableViewCell.swift; sourceTree = "<group>"; };
 		FAAAFBF61F176BC70004900D /* stratechery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stratechery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAAFBF91F176BC70004900D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAAAFBFB1F176BC70004900D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 		FAAAFC191F176BC70004900D /* stratecheryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stratecheryUITests.swift; sourceTree = "<group>"; };
 		FAAAFC1B1F176BC70004900D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		FAC55F141F20C8060054A423 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				FAAAFC2A1F176F670004900D /* PostTableViewCell.swift */,
+				FA689D891F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				FAAAFBFB1F176BC70004900D /* ViewController.swift */,
+				FAC55F141F20C8060054A423 /* PostViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 				TargetAttributes = {
 					FAAAFBF51F176BC70004900D = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 4A4W2VNB5Z;
 						ProvisioningStyle = Automatic;
 					};
 					FAAAFC091F176BC70004900D = {
@@ -472,9 +479,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC55F151F20C8060054A423 /* PostViewController.swift in Sources */,
 				FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */,
 				FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */,
 				FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */,
+				FA689D8A1F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift in Sources */,
 				FAAAFC2B1F176F670004900D /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,6 +629,7 @@
 			baseConfigurationReference = 2FEDDFED02638B4FCFF81DEC /* Pods-stratechery.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4A4W2VNB5Z;
 				INFOPLIST_FILE = stratechery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = stratechery.com.stratechery;
@@ -633,6 +643,7 @@
 			baseConfigurationReference = 400762A70B5D13741519D12D /* Pods-stratechery.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4A4W2VNB5Z;
 				INFOPLIST_FILE = stratechery/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = stratechery.com.stratechery;

@@ -9,7 +9,7 @@ import UIKit
 import Cartography
 
 
-class PostTableViewCell: UITableViewCell {
+class WithoutImgPostTableViewCell: UITableViewCell {
     
     lazy var label: UILabel = {
         let label = UILabel()
@@ -29,19 +29,25 @@ class PostTableViewCell: UITableViewCell {
         dateLabel.textColor = .gray
         // label.backgroundColor = .black
         return dateLabel
+        
     }()
     
-    lazy var imgView: UIImageView = {
-        let imgView = UIImageView()  // set as you want
-        
-
-        return imgView
+    lazy var descriptionLabel: UILabel = {
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = "Wednesday"
+        descriptionLabel.numberOfLines = 6
+        descriptionLabel.font = UIFont(name: "Times New Roman", size: 18)
+        descriptionLabel.textColor = .gray
+        // label.backgroundColor = .black
+        return descriptionLabel
     }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureViews()
         configureConstraints()
+//        print(dateLabel.text!)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,23 +55,23 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func configureViews() {
-        contentView.addSubview(imgView)
+        contentView.addSubview(descriptionLabel)
         contentView.addSubview(label)
         contentView.addSubview(dateLabel)
     }
     
     func configureConstraints() {
         label.frame = contentView.frame
-        constrain(self, label, dateLabel, imgView) { view, label, date, img in
-            img.left == view.left
-            img.top == view.top
-            img.height == view.height
-            img.width == (view.width/2.5)
-            label.top == (view.top + 10)
-            label.left == (img.right + 5)
-            label.right == (view.right - 10)
-            date.bottom == (view.bottom - 10)
+        constrain(self, label, dateLabel, descriptionLabel) { view, label, date, dL in
+            label.top == view.top + 5
+            label.left == view.left + 10
+            dL.top == label.bottom
+            dL.left == view.left + 10
+            date.top == (view.top + 10)
             date.right == (view.right - 10)
+            label.width == 2*view.width/3
+            dL.width == view.width
+            dL.height == view.height/2
         }
     }
     

@@ -16,19 +16,22 @@ struct Feed {
     var link: String?
     var imageLink: String?
     var date: String?
+    var description: String? 
     //    var releaseDate: String
     
     init?(map: Map) {
         
     }
     
-    static func fetchFeed(callback: @escaping ([Feed]?, Error?) -> Void ){
-        let url = "http://uka.kz/?type=feed&page=4"
+    static func fetchFeed(page: Int, callback: @escaping ([Feed]?, Error?) -> Void ){
+        let url = "http://uka.kz/?type=feed&page=\(page)"
         Alamofire.request(url).responseJSON { response in
             //            print(response)
             if let json = response.result.value {
                 let feeds = Mapper<Feed>().mapArray(JSONObject: json)
                 callback(feeds, nil)
+                
+
                 // serialized json response
             }//          let feeds = Mapper<Feed>().mapArray(JSONObject: json)
         }
@@ -44,5 +47,6 @@ extension Feed: Mappable {
         link <- map["url"]
         imageLink <- map["image"]
         date <- map["date"]
+        description <- map["content"]
     }
 }
