@@ -18,9 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootViewController = ViewController()
         let nc = UINavigationController(rootViewController: rootViewController)
-        nc.navigationBar.isTranslucent = false
-        UINavigationBar.appearance().barTintColor = .white
-        UINavigationBar.appearance().tintColor = .white
+        nc.navigationBar.isTranslucent = false 
         window?.rootViewController = nc
         window?.makeKeyAndVisible()
         return true

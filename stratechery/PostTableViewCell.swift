@@ -7,39 +7,41 @@
 //
 import UIKit
 import Cartography
+import SDWebImage
 
 
 class PostTableViewCell: UITableViewCell {
     
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.text = "ZAKA"
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = UIFont(name: "Times New Roman", size: 22)
-        label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.numberOfLines = 3
-        return label
-    }()
+   private var layoutConfigured = false
     
-    lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.text = "Wednesday"
-        dateLabel.font = UIFont(name: "Times New Roman", size: 18)
-        dateLabel.textColor = .gray
-        // label.backgroundColor = .black
-        return dateLabel
-    }()
     
-    lazy var imgView: UIImageView = {
-        let imgView = UIImageView()  // set as you want
-        
-
+    
+    private var group = ConstraintGroup()
+    public lazy var postImageView: UIImageView = {
+        let imgView = UIImageView()
         return imgView
     }()
-
+    public lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Times New Roman", size: 24)
+        label.numberOfLines = 2
+        label.textColor = .blue
+        return label
+    }()
+    public lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Times New Roman", size: 16)
+        label.textColor = .green
+        return label
+    }()
+    public lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 10
+        return label
+    }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        
         configureViews()
         configureConstraints()
     }
@@ -49,24 +51,79 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func configureViews() {
-        contentView.addSubview(imgView)
-        contentView.addSubview(label)
-        contentView.addSubview(dateLabel)
+        self.addSubview(postImageView)
+        self.addSubview(titleLabel)
+        self.addSubview(dateLabel)
+        self.addSubview(descriptionLabel)
+    
     }
     
     func configureConstraints() {
-        label.frame = contentView.frame
-        constrain(self, label, dateLabel, imgView) { view, label, date, img in
-            img.left == view.left
-            img.top == view.top
-            img.height == view.height
-            img.width == (view.width/2.5)
-            label.top == (view.top + 10)
-            label.left == (img.right + 5)
-            label.right == (view.right - 10)
-            date.bottom == (view.bottom - 10)
-            date.right == (view.right - 10)
+        
+        constrain(self,postImageView,titleLabel,dateLabel,descriptionLabel){s,imageView,title,date,description in
+
+            title.top == s.top + 10
+            title.left == s.left + 16
+            
+            date.top == title.bottom + 8
+            date.left == s.left + 16
+            
+            imageView.width == s.width - 32
+            imageView.height == s.width / 1.5
+            imageView.centerX == s.centerX
+            imageView.top == date.bottom + 16
+            
+
+            
+            
+        
         }
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        postImageView.image = nil
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+    }
+    
+    func configure(with post: Feed) {
+        if let imageLink = post.imageLink,
+            let url = URL(string: imageLink){
+            postImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "no-image"))
+        }
+        else {
+            postImageView.isHidden = true
+            descriptionLabel.text = post.description
+            constrain(self,titleLabel,dateLabel,descriptionLabel){s,title,date,description in
+                title.top == s.top + 8
+                title.left == s.left + 16
+                title.width == s.width - 32
+                
+                date.top == title.bottom + 8
+                date.left == s.left + 16
+                
+                description.top == date.bottom + 8
+                description.left == s.left + 16
+                description.width == s.width - 32
+            }
+        
+        }
+        titleLabel.text = post.title
+        
+        guard let dateString = post.date else { return }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        guard let date = dateFormatter.date(from: dateString) else { return }
+        
+        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        dateLabel.text = dateFormatter.string(from: date)
     }
     
     

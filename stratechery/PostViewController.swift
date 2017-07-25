@@ -7,29 +7,55 @@
 //
 
 import UIKit
-
+import  Cartography
 class PostViewController: UIViewController {
+
+    var myPost: Feed?
+    lazy var webView: UIWebView = {
+        let web = UIWebView()
+        return web
+    }()
+    
+    lazy var dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.text = "Wednesday"
+        dateLabel.font = UIFont(name: "Times New Roman", size: 18)
+        dateLabel.textColor = .gray
+        return dateLabel
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        view.backgroundColor = .white
+        configureViews()
+        constrains()
+        if let tempPost = myPost { 
+//            navigationItem.title = tempPost.title!
+            webView.loadHTMLString(tempPost.html!, baseURL: nil)
+            
+//            urlPage = tempPost.link!
+//            loadData(url: urlPage)
+        }
+        }
+    
+    func configureViews() { 
+        view.addSubview(webView)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func constrains(){
+        constrain(webView, view){  w, v  in
+            w.top == v.top + 5
+            w.width == v.width - 20
+            w.centerX == v.centerX
+            
+            w.height == v.height
+            
+//            bb.center == v.center
+//            bb.width == v.width/4
+//            bb.height == v.height/10
+        }
     }
-    */
-
 }
+

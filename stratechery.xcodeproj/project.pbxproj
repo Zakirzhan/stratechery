@@ -10,7 +10,7 @@
 		24FF20E4470D9AE489C81A1E /* Pods_stratechery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0390D18FD730579B13EA /* Pods_stratechery.framework */; };
 		D0E19E9FF8B917E24BF502D4 /* Pods_stratecheryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */; };
 		F8CDBA51D4A4E49347E8C7C7 /* Pods_stratecheryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9314665A2F5590D8750982D3 /* Pods_stratecheryTests.framework */; };
-		FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13884A1F179887003E5511 /* JSONFetch.swift */; };
+		FA13884B1F179887003E5511 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA13884A1F179887003E5511 /* Feed.swift */; };
 		FA689D8A1F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA689D891F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift */; };
 		FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBF91F176BC70004900D /* AppDelegate.swift */; };
 		FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAAFBFB1F176BC70004900D /* ViewController.swift */; };
@@ -49,7 +49,7 @@
 		9314665A2F5590D8750982D3 /* Pods_stratecheryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratecheryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6DA22BDC8771DF349DA4EE4 /* Pods_stratecheryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratecheryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F30C0390D18FD730579B13EA /* Pods_stratechery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_stratechery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA13884A1F179887003E5511 /* JSONFetch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONFetch.swift; sourceTree = "<group>"; };
+		FA13884A1F179887003E5511 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		FA689D891F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithoutImgPostTableViewCell.swift; sourceTree = "<group>"; };
 		FAAAFBF61F176BC70004900D /* stratechery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stratechery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAAAFBF91F176BC70004900D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 		FAAAFC281F176EAE0004900D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FA13884A1F179887003E5511 /* JSONFetch.swift */,
+				FA13884A1F179887003E5511 /* Feed.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -482,7 +482,7 @@
 				FAC55F151F20C8060054A423 /* PostViewController.swift in Sources */,
 				FAAAFBFC1F176BC70004900D /* ViewController.swift in Sources */,
 				FAAAFBFA1F176BC70004900D /* AppDelegate.swift in Sources */,
-				FA13884B1F179887003E5511 /* JSONFetch.swift in Sources */,
+				FA13884B1F179887003E5511 /* Feed.swift in Sources */,
 				FA689D8A1F1F80BE0060D2B9 /* WithoutImgPostTableViewCell.swift in Sources */,
 				FAAAFC2B1F176F670004900D /* PostTableViewCell.swift in Sources */,
 			);

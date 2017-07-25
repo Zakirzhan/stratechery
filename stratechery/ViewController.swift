@@ -9,9 +9,7 @@
 import UIKit
 import Cartography
 import Alamofire
-import ObjectMapper
-import SDWebImage
-
+import ObjectMapper 
 class ViewController: UIViewController {
     var refreshControl:UIRefreshControl!
     var loadMoreStatus = false
@@ -19,10 +17,9 @@ class ViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "singlePost")
         tableView.register(WithoutImgPostTableViewCell.self, forCellReuseIdentifier: "withoutImg")
-        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = self.view.frame.height/5
+        tableView.rowHeight = self.view.frame.height/2
         return tableView
     }()
     var posts = [Feed]()
@@ -139,30 +136,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        if let imgLink = posts[indexPath.row].imageLink {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "singlePost", for: indexPath) as! PostTableViewCell
-            cell.imgView.sd_setImage(with: URL(string: imgLink), placeholderImage: UIImage(named: "no-image"))
-            cell.label.text = posts[indexPath.row].title
-            if let postDate = posts[indexPath.row].date {
-                let dateString = String(postDate.characters.dropLast(15))
-                print(dateString)
-                let dateFormatter = DateFormatter()
-                if let dateParsed = dateFormatter.date(fromNASAString: dateString) {
-                    let stringDate = dateFormatter.weekDays(from: dateParsed)
-                    cell.dateLabel.text = stringDate
-                }
-            }
-            return cell
-        }
-        else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "withoutImg", for: indexPath) as! WithoutImgPostTableViewCell
-            cell.descriptionLabel.text = posts[indexPath.row].description
-            cell.label.text = posts[indexPath.row].title
-            return cell
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "singlePost", for: indexPath) as! PostTableViewCell
+        let post = posts[indexPath.row]
+        cell.selectionStyle = .none
+        cell.configure(with: post)
+        return cell        
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastSectionIndex = tableView.numberOfSections - 1
@@ -186,21 +164,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             loadMore()
         }
     }
-}
-extension DateFormatter {
-    func date(fromNASAString dateString: String) -> Date? {
-        self.dateFormat = "yyyy-MM-dd"
-        self.timeZone = TimeZone(abbreviation: "UTC")
-        self.locale = Locale(identifier: "en_US_POSIX")
-        return self.date(from: dateString)
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goToPostVC(posts[indexPath.row])
     }
     
-    func weekDays(from mydate:Date) -> String? {
-        self.dateFormat = "EEEE, MMM d, yyyy"
-        self.timeZone = TimeZone(abbreviation: "UTC")
-        self.locale = Locale(identifier: "en_US_POSIX")
-        return self.string(from: mydate)
+    func goToPostVC(_ post: Feed) {
+        let vc = PostViewController()
+        vc.myPost = post
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
-
 

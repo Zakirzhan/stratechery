@@ -8,7 +8,10 @@ target 'stratechery' do
   pod ‘Cartography’
   pod 'ObjectMapper’
   pod ‘AlamofireObjectMapper’
+#  pod 'Kingfisher'
   pod 'SDWebImage'
+  pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
+
   # Pods for stratechery
 
   target 'stratecheryTests' do
