@@ -11,32 +11,106 @@ import Cartography
 import Alamofire
 import ObjectMapper 
 class ViewController: UIViewController {
+   
+    var openedMenu = false
+    
+    let headMenu = HeadMenuView(frame: CGRect.zero)
+
     var refreshControl:UIRefreshControl!
     var loadMoreStatus = false
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "singlePost")
-        tableView.register(WithoutImgPostTableViewCell.self, forCellReuseIdentifier: "withoutImg")
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "singlePost") 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = self.view.frame.height/2
+//        let gradient = CAGradientLayer()
+//        
+//        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+//        gradient.colors = [UIColor(red:1.00, green:0.98, blue:0.94, alpha:1.0).cgColor, UIColor.white.cgColor]
+//        
+//        tableView.layer.insertSublayer(gradient, at: 0)
         return tableView
     }()
     var posts = [Feed]()
     var countRow = 6
     var page:Int = 1  //First page is 1
     
+    var headMenuConstraintGroup: ConstraintGroup?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        var hamButton = UIImage(named: "hamburger")
+        let hamburger = UIBarButtonItem(image: hamButton, style: .plain, target: self, action: #selector(openMenu(_:)))
+        self.navigationItem.leftBarButtonItem  = hamburger
+
         refreshCont()
         configureViews()
         configureConstraints()
+        configureHeadMenuConstraints()
         self.title = "Feeds"
+
         loadData(page: page)
         self.tableView.tableFooterView?.isHidden = true
         
     }
+    
+    
+    func configureViews() {
+        tableView.backgroundColor = .white
+        headMenu.parentVC = self
+        view.addSubview(headMenu)
+        view.addSubview(tableView)
+    }
+    
+    func configureConstraints() {
+        constrain(headMenu,tableView, view) { hm, tv, v in
+            tv.top == hm.bottom
+            tv.left == v.left
+            tv.right == v.right
+            tv.width == v.width
+            tv.height == v.height
+        }
+    }
+    
+    func configureHeadMenuConstraints() {
+        headMenuConstraintGroup = constrain(headMenu, view, replace: headMenuConstraintGroup) { hm, v in
+            hm.bottom == v.top
+            hm.centerX == v.centerX
+            hm.height == v.height/3
+            hm.width == v.width
+        }
+    }
+    
+    func updateConstraints(){
+        headMenuConstraintGroup = constrain(view, headMenu, replace: headMenuConstraintGroup) { v, hm in
+            hm.top == v.top
+            hm.centerX == v.centerX
+            hm.height == v.height/3
+            hm.width == v.width
+        }
+    }
+    func openMenu(_ : UIButton){
+        view.setNeedsUpdateConstraints()
+        if !openedMenu {
+            UIView.animate(withDuration: 0.7, animations: {
+                self.updateConstraints()
+                self.view.layoutIfNeeded()
+                
+            })
+        }
+        else {
+            UIView.animate(withDuration: 0.7, animations: {
+                self.configureHeadMenuConstraints()
+                self.view.layoutIfNeeded()
+            })
+            
+
+        }
+        openedMenu = !openedMenu
+//        print(openedMenu)
+    }
+
     
     func loadData(page: Int) {
         Feed.fetchFeed(page: page) { [unowned self] (feeds, error) in
@@ -115,17 +189,6 @@ class ViewController: UIViewController {
             DispatchQueue.main.async() {
                 loadMoreEnd(0)
             }
-        }
-    }
-    
-    func configureViews() {
-        tableView.backgroundColor = .white
-        view.addSubview(tableView)
-    }
-    
-    func configureConstraints() {
-        constrain(tableView, view) { tv, v  in
-            tv.edges == v.edges
         }
     }
 }

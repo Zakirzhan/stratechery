@@ -23,20 +23,21 @@ class PostTableViewCell: UITableViewCell {
     }()
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Times New Roman", size: 24)
-        label.numberOfLines = 2
-        label.textColor = .blue
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.numberOfLines = 3
+        label.textColor = UIColor(red:0.94, green:0.32, blue:0.24, alpha:1.0)
         return label
     }()
     public lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Times New Roman", size: 16)
-        label.textColor = .green
+        label.font =  UIFont.systemFont(ofSize: 16)
+        label.textColor = .black
         return label
     }()
     public lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 10
+        label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -44,6 +45,7 @@ class PostTableViewCell: UITableViewCell {
         
         configureViews()
         configureConstraints()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import  Cartography
+
 class PostViewController: UIViewController {
 
     var myPost: Feed?
@@ -16,13 +17,13 @@ class PostViewController: UIViewController {
         return web
     }()
     
-    lazy var dateLabel: UILabel = {
-        let dateLabel = UILabel()
-        dateLabel.text = "Wednesday"
-        dateLabel.font = UIFont(name: "Times New Roman", size: 18)
-        dateLabel.textColor = .gray
-        return dateLabel
-    }()
+//    lazy var dateLabel: UILabel = {
+//        let dateLabel = UILabel()
+//        dateLabel.text = "Wednesday"
+//        dateLabel.font = UIFont(name: "Times New Roman", size: 18)
+//        dateLabel.textColor = .gray
+//        return dateLabel
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
