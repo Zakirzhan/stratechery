@@ -38,7 +38,7 @@ class MenuItemsTableViewCell: UITableViewCell {
     
     func configureConstrains(){
         constrain(self, menuTitleLabel, imageView!){s,t,i in
-            i.left == s.left + 10
+            i.left == s.left + 16
             i.centerY == s.centerY
             t.left == i.right + 5
             t.centerY == s.centerY

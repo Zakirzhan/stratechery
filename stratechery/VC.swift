@@ -9,21 +9,26 @@
 import UIKit
 import Cartography
 import Alamofire
-import ObjectMapper 
+import ObjectMapper
+
 class ViewController: UIViewController {
    
     var openedMenu = false
-    
+    var openedView = false
     let headMenu = HeadMenuView(frame: CGRect.zero)
-
+    let yearsInReview = YearsInReviewView(frame: CGRect.zero)
+    
     var refreshControl:UIRefreshControl!
     var loadMoreStatus = false
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "singlePost") 
+        tableView.register(PostImageTableViewCell.self, forCellReuseIdentifier: "imageCell")
+        tableView.register(PostDescriptionTableViewCell.self, forCellReuseIdentifier: "descriptionCell")
+
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = self.view.frame.height/2
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
 //        let gradient = CAGradientLayer()
 //        
 //        gradient.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
@@ -37,39 +42,49 @@ class ViewController: UIViewController {
     var page:Int = 1  //First page is 1
     
     var headMenuConstraintGroup: ConstraintGroup?
-    
+    var yir: ConstraintGroup?
     override func viewDidLoad() {
         super.viewDidLoad()
         var hamButton = UIImage(named: "hamburger")
         let hamburger = UIBarButtonItem(image: hamButton, style: .plain, target: self, action: #selector(openMenu(_:)))
         self.navigationItem.leftBarButtonItem  = hamburger
 
+        
+        var calButton = UIImage(named: "calendar")
+        let calendar = UIBarButtonItem(image: calButton, style: .plain, target: self, action: #selector(openView(_:)))
+        self.navigationItem.rightBarButtonItem  = calendar
+
+        
         refreshCont()
         configureViews()
-        configureConstraints()
         configureHeadMenuConstraints()
-        self.title = "Feeds"
+        configureYIRConstraints()
+        configureConstraints()
+        self.title = "Feed"
 
         loadData(page: page)
         self.tableView.tableFooterView?.isHidden = true
         
-    }
-    
+    } 
     
     func configureViews() {
         tableView.backgroundColor = .white
         headMenu.parentVC = self
+        yearsInReview.parentVC = self
+        
         view.addSubview(headMenu)
         view.addSubview(tableView)
+        view.addSubview(yearsInReview)
     }
     
     func configureConstraints() {
-        constrain(headMenu,tableView, view) { hm, tv, v in
+        constrain(headMenu, yearsInReview, tableView, view) { hm, yir, tv, v in
             tv.top == hm.bottom
             tv.left == v.left
             tv.right == v.right
             tv.width == v.width
             tv.height == v.height
+            yir.left == v.right
         }
     }
     
@@ -90,48 +105,91 @@ class ViewController: UIViewController {
             hm.width == v.width
         }
     }
+    
+    
     func openMenu(_ : UIButton){
         view.setNeedsUpdateConstraints()
         if !openedMenu {
-            UIView.animate(withDuration: 0.7, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.updateConstraints()
                 self.view.layoutIfNeeded()
                 
             })
         }
         else {
-            UIView.animate(withDuration: 0.7, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.configureHeadMenuConstraints()
                 self.view.layoutIfNeeded()
             })
             
-
+            
         }
         openedMenu = !openedMenu
-//        print(openedMenu)
+        //        print(openedMenu)
     }
+    
+    
+    
 
     
+    func configureYIRConstraints() {
+        yir = constrain(yearsInReview, view, replace: yir) { y, v in
+            y.left == v.right
+            y.height == v.height
+            y.width == v.width
+            y.top == v.top
+        }
+    }
+    
+    func updateYIRConstraints(){
+        yir = constrain(yearsInReview, view, replace: yir) { y, v in
+            y.left == v.left
+            y.height == v.height
+            y.width == v.width
+            y.top == v.top
+        }
+    }
+    
+    func openView(_ : UIButton){
+//        view.setNeedsUpdateConstraints()
+        if !openedView {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.updateYIRConstraints()
+                self.view.layoutIfNeeded()
+                
+            })
+        }
+        else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.configureYIRConstraints()
+                self.view.layoutIfNeeded()
+            })
+            
+            
+        }
+        openedView = !openedView
+                print(openedView)
+    }
     func loadData(page: Int) {
+        if page == 1 {
         Feed.fetchFeed(page: page) { [unowned self] (feeds, error) in
             guard let feedList = feeds else { return }
-            if page != 1 {
+            self.posts = feedList }
+        }
+            else {
                 Feed.fetchFeed(page: page) { [unowned self] (feeds, error) in
                     guard let feedList = feeds else { return }
                     for arr in feedList {
                         self.posts.append(arr)
+                        
                     }
                 }
             }
-            else {
-                self.posts = feedList
-            }
             self.tableView.reloadData()
         }
-    }
     func refreshCont() {
         refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Идет обновление...")
+        refreshControl.attributedTitle = NSAttributedString(string: "Please, wait...")
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
     }
@@ -172,7 +230,7 @@ class ViewController: UIViewController {
         if ( !loadMoreStatus ) {
             self.loadMoreStatus = true
             self.tableView.tableFooterView?.isHidden = false
-            loadMoreBegin(newtext: "ZHANym", loadMoreEnd: {(x:Int) -> () in
+            loadMoreBegin(newtext: "Stratechery", loadMoreEnd: {(x:Int) -> () in
                             self.page += 1
                             self.loadData(page: self.page)
                             self.tableView.reloadData()
@@ -199,11 +257,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "singlePost", for: indexPath) as! PostTableViewCell
         let post = posts[indexPath.row]
+         if let imgLink = post.imageLink, let url = URL(string: imgLink) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath) as! PostImageTableViewCell
         cell.selectionStyle = .none
         cell.configure(with: post)
-        return cell        
+        cell.postImageView.clipsToBounds = true
+        return cell
+        }
+         else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionCell", for: indexPath) as! PostDescriptionTableViewCell
+            cell.selectionStyle = .none
+            cell.configure(with: post) 
+            return cell
+        }
+        
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastSectionIndex = tableView.numberOfSections - 1

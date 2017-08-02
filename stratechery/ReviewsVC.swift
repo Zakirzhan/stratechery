@@ -20,7 +20,8 @@ class ReviewsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        Page.parsePage(year: (page?.year)!) { [unowned self] (feeds, error) in
+        navigationItem.title = page?.title
+        Page.parsePage(type: (page?.type)!, id: (page?.id)!) { [unowned self] (feeds, error) in
             if let feedList = feeds {
                 self.post = feedList
                 if let tempPost = self.post {

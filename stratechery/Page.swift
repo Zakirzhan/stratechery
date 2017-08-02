@@ -7,7 +7,7 @@ import Alamofire
 import ObjectMapper
 
 struct Page {
-    var title: String? 
+    var title: String?
     var html: String?
     //    var releaseDate: String
     
@@ -15,15 +15,19 @@ struct Page {
         
     }
     
-    static func parsePage(year: Int, callback: @escaping (Page?, Error?) -> Void ){
+    static func parsePage(type: String, id: String, callback: @escaping (Page?, Error?) -> Void ){
         let url = "http://uka.kz/parser.php"
-        
-        let params: [String: Any] = [
-            "year" : year,
-            "format" : "json",
-        ]
-        
-        Alamofire.request(url, parameters: params).responseJSON { response in
+        var params: [String: String] = ["format" : "json"]
+
+        if type == "year" {
+        params["year"] = id
+
+        }
+        else {
+         params["page"]=id
+        }
+        print(params)
+                  Alamofire.request(url, parameters: params).responseJSON { response in
 //            print(response)
             if let json = response.result.value {
                 let feeds = Mapper<Page>().map(JSONObject: json)
@@ -48,6 +52,8 @@ extension Page: Mappable {
 }
 
 struct MyPage {
-    var year: Int
+    var type: String
+    var id: String
     var title: String
+    var icon: String
 }

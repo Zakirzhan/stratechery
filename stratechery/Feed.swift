@@ -8,6 +8,8 @@
 import Foundation
 import Alamofire
 import ObjectMapper
+import Cache
+
 
 struct Feed {
     var title: String?
@@ -23,22 +25,42 @@ struct Feed {
     }
     
     static func fetchFeed(page: Int, callback: @escaping ([Feed]?, Error?) -> Void ){
-        let url = "http://uka.kz/"
+        let cache = HybridCache(name: "Fetch")
+        print("json\(page)")
+        let json: JSON? = cache.object(forKey: "json\(page)")
         
-        let params: [String: Any] = [
-            "type" : "feed",
-            "page" : page
-        ]
-        
-        Alamofire.request(url, parameters: params).responseJSON { response in
-            if let json = response.result.value {
-                let feeds = Mapper<Feed>().mapArray(JSONObject: json)
-                callback(feeds, nil)
-            }
-            else {
-                callback(nil, response.error)
+            if json != nil {
+//                print(json)
+                let feeds = Mapper<Feed>().mapArray(JSONObject: json?.object)
+            
+            callback(feeds, nil)
+//                print(feeds)
+        } else  {
+            let url = "http://uka.kz/"
+            
+            let params: [String: Any] = [
+                "type" : "feed",
+                "page" : page
+            ]
+            
+            Alamofire.request(url, parameters: params).responseJSON { response in
+                if let json = response.result.value {
+                 
+                    let feeds = Mapper<Feed>().mapArray(JSONObject: json)
+                    do {
+                        try cache.addObject(JSON.array(feeds!.toJSON()), forKey: "json\(page)")
+                    }
+                    catch {
+                        print("Error")
+                    }
+                    callback(feeds, nil)
+                }
+                else {
+                    callback(nil, response.error)
+                }
             }
         }
+        
         
     }
     

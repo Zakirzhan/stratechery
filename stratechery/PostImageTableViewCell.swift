@@ -10,7 +10,7 @@ import Cartography
 import SDWebImage
 
 
-class PostTableViewCell: UITableViewCell {
+class PostImageTableViewCell: UITableViewCell {
     
    private var layoutConfigured = false
     
@@ -34,12 +34,6 @@ class PostTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
-    public lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 10
-        label.font = UIFont.systemFont(ofSize: 16)
-        return label
-    }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
@@ -56,16 +50,16 @@ class PostTableViewCell: UITableViewCell {
         self.addSubview(postImageView)
         self.addSubview(titleLabel)
         self.addSubview(dateLabel)
-        self.addSubview(descriptionLabel)
     
     }
     
     func configureConstraints() {
         
-        constrain(self,postImageView,titleLabel,dateLabel,descriptionLabel){s,imageView,title,date,description in
+        constrain(self,postImageView,titleLabel,dateLabel){s,imageView,title,date in
 
             title.top == s.top + 10
             title.left == s.left + 16
+            title.width == s.width - 32
             
             date.top == title.bottom + 8
             date.left == s.left + 16
@@ -74,11 +68,7 @@ class PostTableViewCell: UITableViewCell {
             imageView.height == s.width / 1.5
             imageView.centerX == s.centerX
             imageView.top == date.bottom + 16
-            
-
-            
-            
-        
+            imageView.bottom == s.bottom - 10
         }
         
     }
@@ -97,23 +87,6 @@ class PostTableViewCell: UITableViewCell {
         if let imageLink = post.imageLink,
             let url = URL(string: imageLink){
             postImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "no-image"))
-        }
-        else {
-            postImageView.isHidden = true
-            descriptionLabel.text = post.description
-            constrain(self,titleLabel,dateLabel,descriptionLabel){s,title,date,description in
-                title.top == s.top + 8
-                title.left == s.left + 16
-                title.width == s.width - 32
-                
-                date.top == title.bottom + 8
-                date.left == s.left + 16
-                
-                description.top == date.bottom + 8
-                description.left == s.left + 16
-                description.width == s.width - 32
-            }
-        
         }
         titleLabel.text = post.title
         
