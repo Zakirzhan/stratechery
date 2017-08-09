@@ -38,9 +38,9 @@ class HeadMenuView: UIView {
         super.init(frame: frame)
         
         menu.append(MyPage(type:"self", id: "feed", title: "Home", icon: "home"))
-        menu.append(MyPage(type:"self", id: "archives", title: "Archives", icon: "calendar"))
+//        menu.append(MyPage(type:"self", id: "archives", title: "Archives", icon: "calendar"))
         menu.append(MyPage(type: "page", id: "about", title: "About me", icon: "about"))
-        menu.append(MyPage(type:"self", id: "settings", title: "Settings", icon: "settings"))
+//        menu.append(MyPage(type:"self", id: "settings", title: "Settings", icon: "settings"))
         getMenu()
         constrainMenu()
         self.tableView.separatorStyle = .none

@@ -12,7 +12,13 @@ import Alamofire
 import ObjectMapper
 
 class ViewController: UIViewController {
-   
+    lazy var activityIndicator:UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        return activityIndicator
+    }()
     var openedMenu = false
     var openedView = false
     let headMenu = HeadMenuView(frame: CGRect.zero)
@@ -45,6 +51,8 @@ class ViewController: UIViewController {
     var yir: ConstraintGroup?
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        
         var hamButton = UIImage(named: "hamburger")
         let hamburger = UIBarButtonItem(image: hamButton, style: .plain, target: self, action: #selector(openMenu(_:)))
         self.navigationItem.leftBarButtonItem  = hamburger
@@ -60,13 +68,15 @@ class ViewController: UIViewController {
         configureHeadMenuConstraints()
         configureYIRConstraints()
         configureConstraints()
+        activityIndicator.startAnimating()
+
         self.title = "Feed"
 
         loadData(page: page)
+        
         self.tableView.tableFooterView?.isHidden = true
         
-    } 
-    
+    }
     func configureViews() {
         tableView.backgroundColor = .white
         headMenu.parentVC = self
@@ -75,10 +85,12 @@ class ViewController: UIViewController {
         view.addSubview(headMenu)
         view.addSubview(tableView)
         view.addSubview(yearsInReview)
+        view.addSubview(activityIndicator)
     }
     
     func configureConstraints() {
-        constrain(headMenu, yearsInReview, tableView, view) { hm, yir, tv, v in
+        constrain(headMenu, yearsInReview, tableView,activityIndicator, view) { hm, yir, tv, ai, v in
+            ai.center == v.center
             tv.top == hm.bottom
             tv.left == v.left
             tv.right == v.right
@@ -92,7 +104,7 @@ class ViewController: UIViewController {
         headMenuConstraintGroup = constrain(headMenu, view, replace: headMenuConstraintGroup) { hm, v in
             hm.bottom == v.top
             hm.centerX == v.centerX
-            hm.height == v.height/3
+            hm.height == v.height/4.5 - 30
             hm.width == v.width
         }
     }
@@ -101,7 +113,7 @@ class ViewController: UIViewController {
         headMenuConstraintGroup = constrain(view, headMenu, replace: headMenuConstraintGroup) { v, hm in
             hm.top == v.top
             hm.centerX == v.centerX
-            hm.height == v.height/3
+            hm.height == v.height/4.5 - 30
             hm.width == v.width
         }
     }
@@ -135,7 +147,7 @@ class ViewController: UIViewController {
     func configureYIRConstraints() {
         yir = constrain(yearsInReview, view, replace: yir) { y, v in
             y.left == v.right
-            y.height == v.height
+            y.height == v.height/3
             y.width == v.width
             y.top == v.top
         }
@@ -144,7 +156,7 @@ class ViewController: UIViewController {
     func updateYIRConstraints(){
         yir = constrain(yearsInReview, view, replace: yir) { y, v in
             y.left == v.left
-            y.height == v.height
+            y.height == v.height/3
             y.width == v.width
             y.top == v.top
         }
@@ -174,18 +186,22 @@ class ViewController: UIViewController {
         if page == 1 {
         Feed.fetchFeed(page: page) { [unowned self] (feeds, error) in
             guard let feedList = feeds else { return }
-            self.posts = feedList }
+            self.posts = feedList
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            }
         }
             else {
                 Feed.fetchFeed(page: page) { [unowned self] (feeds, error) in
                     guard let feedList = feeds else { return }
                     for arr in feedList {
                         self.posts.append(arr)
+                        self.tableView.reloadData()
+                        
                         
                     }
                 }
             }
-            self.tableView.reloadData()
         }
     func refreshCont() {
         refreshControl = UIRefreshControl()

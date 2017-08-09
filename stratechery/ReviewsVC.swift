@@ -15,10 +15,20 @@ class ReviewsVC: UIViewController {
     var post: Page?
     lazy var webView: UIWebView = {
         let web = UIWebView()
+        web.delegate = self
+
         return web
+    }()
+    lazy var activityIndicator:UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        //        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        return activityIndicator
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.startAnimating()
         view.backgroundColor = .white
         navigationItem.title = page?.title
         Page.parsePage(type: (page?.type)!, id: (page?.id)!) { [unowned self] (feeds, error) in
@@ -43,21 +53,31 @@ class ReviewsVC: UIViewController {
     
     func configureViews() {
         view.addSubview(webView)
+        view.addSubview(activityIndicator)
         
     }
     
     
     func constrains(){
-        constrain(webView, view){  w, v  in
+        constrain(webView, activityIndicator, view){  w, ai, v  in
             w.top == v.top
             w.width == v.width - 20
             w.centerX == v.centerX
             
             w.height == v.height
+            ai.center == v.center
+
             
             //            bb.center == v.center
             //            bb.width == v.width/4
             //            bb.height == v.height/10
         }
+    }
+}
+
+extension ReviewsVC: UIWebViewDelegate {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        activityIndicator.stopAnimating()
+        
     }
 }
